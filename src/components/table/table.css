@@ -1,0 +1,13 @@
+.table {
+  background: rgb(110, 69, 204);
+}
+
+.table td {
+  background: lightblue;
+}
+
+#TableConfig {
+  background: rgb(121, 166, 180);
+  display: "flex";
+  flex-direction: "table-column";
+}

@@ -1,0 +1,6 @@
+#dashboard {
+  display: flex;
+  flex-direction: row;
+  background-color: "red";
+  width: "200px";
+}
