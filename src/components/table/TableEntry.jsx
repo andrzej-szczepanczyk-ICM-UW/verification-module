@@ -26,7 +26,7 @@ export function TableEntry({ date, value }) {
           <tr key={currentDate}>
             <td>{currentDate}</td>
             <td>{value.um[index]}</td>
-            <td>{p}</td>
+            <td>0</td>
             <td>brak przymrozka</td>
             <td>{value.imgw[index]}</td>
           </tr>

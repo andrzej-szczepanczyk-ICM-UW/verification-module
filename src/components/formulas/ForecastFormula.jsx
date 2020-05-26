@@ -5,7 +5,9 @@ import "./formulas.css";
 export function ForecastFormula() {
   return (
     <>
-      <div id="formulas">Forecast formula.</div>
+      <div id="formulas">Forecast FORMULA.</div>
+      Choose Date of forecast:
+      <input type="date"></input>
     </>
   );
 }

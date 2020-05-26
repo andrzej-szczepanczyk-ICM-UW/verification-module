@@ -1,3 +1,11 @@
-#baner {
+#firstYear {
   background: lightcoral;
+}
+
+#lastYear {
+  background: lightcoral;
+}
+
+p {
+  margin-bottom: 0px;
 }

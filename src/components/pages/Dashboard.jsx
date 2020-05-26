@@ -39,7 +39,7 @@ export function Dashboard() {
       <div id="forecast-column">
         <ForecastFormula class="formulas"></ForecastFormula>
         <TableConfig class="settings"></TableConfig>
-        <Table class="formulas" />
+        <Table class="formulas"></Table>
       </div>
       <div id="historicals-column">
         <HistoricalsFormula class="formulas"></HistoricalsFormula>
