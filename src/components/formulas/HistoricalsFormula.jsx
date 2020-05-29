@@ -2,10 +2,7 @@ import React from "react";
 import { debounce } from "debounce";
 import { useSelector, useDispatch } from "react-redux";
 
-import {
-  updateFirstDate,
-  updateSecondDate,
-} from "../../store/reducers/table/actions";
+import { updateFilters } from "../../store/reducers/table/actions";
 
 import "./formulas.css";
 
@@ -14,12 +11,8 @@ export function HistoricalsFormula() {
   const { firstDate, lastDate } = useSelector((state) => state.table);
   const debouncedDispatch = debounce(dispatch, 100);
 
-  const handleFirstDateChange = (e) => {
-    debouncedDispatch(updateFirstDate(e.target.value));
-  };
-
-  const handleLastDateChange = (e) => {
-    debouncedDispatch(updateSecondDate(e.target.value));
+  const handleUpdateFilters = (e) => {
+    debouncedDispatch(updateFilters(e.target.value));
   };
 
   return (
@@ -31,7 +24,7 @@ export function HistoricalsFormula() {
         <select>
           <option>łeba urban</option>
           <option>łeba forest</option>
-          <option>Poligon Woskowy Orzysz</option>
+          <option>Poligon Wojskowy Orzysz</option>
           <option>kotlina jeleniogórska</option>
         </select>
         <p id="rowText">row</p>
@@ -66,18 +59,8 @@ export function HistoricalsFormula() {
           <option>2020</option>
         </select>
         <p id="colText">Choose Date range</p>
-        <input
-          id="firstDate"
-          type="date"
-          onChange={handleFirstDateChange}
-          defaultValue={firstDate}
-        />
-        <input
-          id="lastDate"
-          type="date"
-          onChange={handleLastDateChange}
-          defaultValue={lastDate}
-        />
+        <input id="firstDate" type="date" defaultValue={firstDate} />
+        <input id="lastDate" type="date" defaultValue={lastDate} />
         <p id="colText">Choose Hour Range</p>
         <select id="firstYear" type="select">
           <option>0</option>
@@ -137,7 +120,7 @@ export function HistoricalsFormula() {
           <option value="months">Group by months</option>
         </select>
         <br></br>
-        <button onclick="parseDataFilters()">Run!</button>
+        <button onclick={handleUpdateFilters}>Run!</button>
       </>
     </div>
   );

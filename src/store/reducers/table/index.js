@@ -2,19 +2,36 @@ import {
   ADD_DATA,
   UPDATE_SLOPE,
   UPDATE_INTERCEPT,
-  UPDATE_FIRST_DATE,
-  UPDATE_LAST_DATE,
+  UPDATE_FILTERS,
 } from "./actions";
 
 const defaultState = {
   slope: 0.15,
   intercept: 0.15,
-  firstDate: null,
-  lastDate: null,
+  node: {
+    id: 0,
+    row: 0,
+    col: 0,
+    description: "",
+  },
+  forecast: {
+    start: 0,
+  },
+  filters: {
+    firstYear: 2016,
+    lastYear: 2019,
+    firstDate: "2020-06-01T00:00:00",
+    lastDate: "2020-10-01T00:00:00",
+    firstHour: 0,
+    lastHour: 21,
+  },
+
   data: {},
 };
 
 export function table(state = defaultState, action) {
+  //komentarz od korepetytora
+  //const state = store.getState();
   switch (action.type) {
     case ADD_DATA:
       return {
@@ -34,15 +51,10 @@ export function table(state = defaultState, action) {
         ...state,
         intercept: action.intercept,
       };
-    case UPDATE_FIRST_DATE:
+    case UPDATE_FILTERS:
       return {
         ...state,
         firstDate: action.firstDate,
-      };
-    case UPDATE_LAST_DATE:
-      return {
-        ...state,
-        lastDate: action.lastDate,
       };
     default:
       return state;

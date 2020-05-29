@@ -15,7 +15,8 @@ import "./dashboard.css";
 
 export function Dashboard() {
   const dispatch = useDispatch();
-  const { firstDate, lastDate } = useSelector((store) => store.table);
+  const { firstDate, lastDate } = useSelector((state) => state.table);
+  const { someOtherData } = useSelector((store) => store.someOtherReducer);
 
   React.useEffect(() => {
     console.log("QUERY", `/?from=${firstDate || ""}&to=${lastDate || ""}`);
@@ -30,7 +31,7 @@ export function Dashboard() {
       .then((json) => {
         console.log(json);
         console.log("length", JSON.stringify(json).length);
-        dispatch(addData(json));
+        dispatch(addData(json, someOtherData));
       });
   }, [dispatch, firstDate, lastDate]);
 

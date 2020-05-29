@@ -3,10 +3,9 @@
 export const ADD_DATA = "ADD_DATA";
 export const UPDATE_SLOPE = "UPDATE_SLOPE";
 export const UPDATE_INTERCEPT = "UPDATE_INTERCEPT";
-export const UPDATE_FIRST_DATE = "UPDATE_FIRST_DATE";
-export const UPDATE_LAST_DATE = "UPDATE_LAST_DATE";
+export const UPDATE_FILTERS = "UPDATE_FILTERS";
 
-export const addData = (data) => ({
+export const addData = (data, someotherData) => ({
   type: ADD_DATA,
   payload: data,
 });
@@ -21,12 +20,7 @@ export const updateIntercept = (intercept) => ({
   intercept,
 });
 
-export const updateFirstDate = (firstDate) => ({
-  type: UPDATE_INTERCEPT,
+export const updateFilters = (firstDate) => ({
+  type: UPDATE_FILTERS,
   firstDate,
-});
-
-export const updateSecondDate = (lastDate) => ({
-  type: UPDATE_INTERCEPT,
-  lastDate,
 });
