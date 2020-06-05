@@ -1,9 +1,6 @@
-#firstYear {
-  background: lightcoral;
-}
-
+#firstYear,
 #lastYear {
-  background: lightcoral;
+  background: rgb(188, 188, 250);
 }
 
 p {

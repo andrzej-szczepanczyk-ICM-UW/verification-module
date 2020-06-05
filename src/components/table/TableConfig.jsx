@@ -1,5 +1,4 @@
 import React from "react";
-import { TableEntry } from "./TableEntry";
 import "./table.css";
 import {
   updateSlope,

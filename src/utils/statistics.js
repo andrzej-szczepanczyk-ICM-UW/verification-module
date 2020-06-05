@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-//const { slope, intercept } = useSelector((state) => state.table);
+// import { useSelector } from "react-redux";
+// const { slope, intercept } = useSelector((state) => state.table);
 
 export class StatVerif {
   static descriptions() {
@@ -12,7 +12,7 @@ export class StatVerif {
   }
 
   static states(modelPredict, realityPredict) {
-    let desc = this.descriptions();
+    //let desc = this.descriptions();
   }
 
   verification(p, observ) {
@@ -30,7 +30,7 @@ export class StatVerif {
 
   constructor(model, observation) {
     this.theshold = 0.2;
-    let p = computeMockSigmoid(model, 0.3, 1.1);
+    //let p = computeMockSigmoid(model, 0.3, 1.1);
   }
 }
 

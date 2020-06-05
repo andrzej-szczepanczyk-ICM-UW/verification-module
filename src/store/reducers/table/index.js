@@ -3,6 +3,7 @@ import {
   UPDATE_SLOPE,
   UPDATE_INTERCEPT,
   UPDATE_FILTERS,
+  UPDATE_NODE,
 } from "./actions";
 
 const defaultState = {
@@ -26,7 +27,10 @@ const defaultState = {
     lastHour: 21,
   },
 
-  data: {},
+  data: {
+    um: [1, 2, 3],
+    imgw: [4, 5, 6],
+  },
 };
 
 export function table(state = defaultState, action) {
@@ -54,8 +58,20 @@ export function table(state = defaultState, action) {
     case UPDATE_FILTERS:
       return {
         ...state,
-        firstDate: action.firstDate,
+        filters: {
+          ...state.filters,
+          ...action.payload,
+        },
       };
+    case UPDATE_NODE:
+      return {
+        ...state,
+        node: {
+          ...state.node,
+          ...action.payload,
+        },
+      };
+
     default:
       return state;
   }

@@ -10,6 +10,7 @@
     "concurrently": "^5.2.0",
     "cors": "^2.8.5",
     "debounce": "^1.2.0",
+    "doc": "0.0.3",
     "dotenv": "^8.2.0",
     "moment": "^2.25.3",
     "mongodb": "^3.5.7",
@@ -21,8 +22,7 @@
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "taucharts": "^2.8.0",
-    "taucharts-react": "^1.1.0"
+    "taucharts": "^2.8.0"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"nodemon server/index.js\"",

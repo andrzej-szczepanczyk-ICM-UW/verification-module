@@ -8,42 +8,44 @@ require("dotenv").config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(pino);
+// app.use(pino);
 
 let db = null;
 mongodb.connect(process.env.MONGO_DB).then((database) => {
-  db = database.db("verificationservice");
+  db = database.db("verification_service");
 });
 
-app.get("/", (req, res) => {
-  db.collection("UMIMGW")
-    .find({})
-    .toArray()
-    .then((data) => {
-      console.log(JSON.stringify(data).length / 1024 / 1024, "MB");
-      return data;
-    })
-    .then((data) => {
-      const { from, to } = req.query;
-      const fromDate = +new Date(from);
-      const toDate = +new Date(to);
+app.get("/api/mongodata", async (req, res) => {
+  const filters = {};
+  const { row, col, firstDate, lastDate } = req.query;
+  if (row) {
+    filters["row"] = Number(row);
+  }
 
-      const filteredData = {};
-      data.forEach((object) => {
-        if (
-          (!to || +object.date <= toDate) &&
-          (!from || +object.date >= fromDate)
-        ) {
-          filteredData[+object.date] = object;
-        }
-      });
+  if (col) {
+    filters["col"] = Number(col);
+  }
 
-      return filteredData;
-    })
-    .then((filtered) => {
-      res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(filtered));
-    });
+  const dateRange = {};
+  if (firstDate) {
+    dateRange["$gte"] = new Date(firstDate);
+  }
+
+  if (lastDate) {
+    dateRange["$lte"] = new Date(lastDate);
+  }
+
+  if (Object.keys(dateRange).length > 0) {
+    filters.date = dateRange;
+  }
+
+  const data = await db
+    .collection("UM")
+    //rozszerzyć i rozwinąć tutaj filtrowanie danych
+    .find(filters)
+    .toArray();
+
+  res.send(JSON.stringify(data));
 });
 
 app.listen(3003, () =>

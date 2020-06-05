@@ -5,6 +5,7 @@ import "./table.css";
 
 export function Table() {
   const data = useSelector((state) => state.table.data);
+  console.warn("data is ", data);
   const dates = Object.keys(data);
 
   if (dates.length === 0) {
@@ -23,9 +24,9 @@ export function Table() {
         </tr>
       </thead>
       <tbody>
-        {dates.map((date) => (
+        {/* {dates.map((date) => (
           <TableEntry key={date} date={date} value={data[date]} />
-        ))}
+        ))} */}
       </tbody>
     </table>
   );

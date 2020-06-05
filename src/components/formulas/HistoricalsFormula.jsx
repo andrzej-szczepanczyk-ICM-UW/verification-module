@@ -2,17 +2,69 @@ import React from "react";
 import { debounce } from "debounce";
 import { useSelector, useDispatch } from "react-redux";
 
-import { updateFilters } from "../../store/reducers/table/actions";
+import { updateFilters, updateNode } from "../../store/reducers/table/actions";
 
 import "./formulas.css";
+import queryString from "query-string";
 
 export function HistoricalsFormula() {
   const dispatch = useDispatch();
-  const { firstDate, lastDate } = useSelector((state) => state.table);
-  const debouncedDispatch = debounce(dispatch, 100);
+  const { filters } = useSelector((state) => state.table);
+  const { node } = useSelector((state) => state.table);
+  React.useEffect(() => {
+    console.log(
+      "data which I am going to send to servers as parameters are ",
+      filters
+    );
+    let isCancelled = false;
 
-  const handleUpdateFilters = (e) => {
-    debouncedDispatch(updateFilters(e.target.value));
+    fetch(
+      `http://localhost:3003/api/mongodata/?${queryString.stringify(filters)}`
+    )
+      // I ve tried to convert response in a json format
+      .then((response) => response.json())
+      .then((data) => {
+        if (!isCancelled) {
+          // dispatch(setData(data))
+          console.log("Hey, setting data with my ", data);
+        }
+        console.log("Hey, I received an answer", data);
+      });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [filters, dispatch]);
+
+  console.log("update filters is !!!!!!!!!!!!", filters);
+  console.log("update node is !!!!!!!!!!!!", node);
+
+  //const debouncedDispatch = debounce(dispatch, 100);
+
+  const fillRowCol = () => {
+    let debouncedDispatch = debounce(dispatch, 1000);
+    debouncedDispatch(
+      updateNode({
+        id: 1,
+        row: 10,
+        col: 20,
+        description: "descr",
+      })
+    );
+  };
+
+  const handleUpdateFilters = () => {
+    let debouncedDispatch = debounce(dispatch, 1000);
+    debouncedDispatch(
+      updateFilters({
+        firstYear: 2016,
+        lastYear: 2019,
+        firstDate: "2010-06-01T00:00:00",
+        lastDate: "2010-10-01T00:00:00",
+        firstHour: 0,
+        lastHour: 21,
+      })
+    );
   };
 
   return (
@@ -21,7 +73,7 @@ export function HistoricalsFormula() {
         Historicals FORMULA
         <br></br>
         choose Node:
-        <select>
+        <select onChange={fillRowCol}>
           <option>łeba urban</option>
           <option>łeba forest</option>
           <option>Poligon Wojskowy Orzysz</option>
@@ -59,8 +111,12 @@ export function HistoricalsFormula() {
           <option>2020</option>
         </select>
         <p id="colText">Choose Date range</p>
-        <input id="firstDate" type="date" defaultValue={firstDate} />
-        <input id="lastDate" type="date" defaultValue={lastDate} />
+        <input
+          id="firstDate"
+          type="date"
+          defaultValue={"2010-06-01T00:00:00"}
+        />
+        <input id="lastDate" type="date" defaultValue={"2010-10-01T00:00:00"} />
         <p id="colText">Choose Hour Range</p>
         <select id="firstYear" type="select">
           <option>0</option>
@@ -120,7 +176,7 @@ export function HistoricalsFormula() {
           <option value="months">Group by months</option>
         </select>
         <br></br>
-        <button onclick={handleUpdateFilters}>Run!</button>
+        <button onClick={handleUpdateFilters}>Run!</button>
       </>
     </div>
   );
