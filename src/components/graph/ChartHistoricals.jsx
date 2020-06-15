@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import taucharts from "taucharts";
 
-// const chartData = [1, 2, 3];
 var chartData = [
   {
     team: "d",

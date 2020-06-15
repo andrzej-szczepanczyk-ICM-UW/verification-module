@@ -1,12 +1,10 @@
 import React from "react";
-import "./table.css";
+import { useSelector, useDispatch } from "react-redux";
 import {
   updateSlope,
   updateIntercept,
 } from "../../store/reducers/table/actions";
 import { debounce } from "debounce";
-
-import { useSelector, useDispatch } from "react-redux";
 
 export function TableConfig() {
   const dispatch = useDispatch();
@@ -22,23 +20,27 @@ export function TableConfig() {
   };
 
   return (
-    <>
-      TableConfig: Slope: <strong>{slope}</strong>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        defaultValue={slope * 100}
-        onChange={handleSlopeChange}
-      />
-      intercept: <strong>{intercept}</strong>
-      <input
-        type="range"
-        min="0"
-        max="100"
-        defaultValue={intercept * 100}
-        onChange={handleInterceptChange}
-      />
-    </>
+    <div>
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          defaultValue={slope * 100}
+          onChange={handleSlopeChange}
+        />
+      </div>
+      {slope}
+      <div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          defaultValue={intercept * 100}
+          onChange={handleInterceptChange}
+        />
+        {intercept}
+      </div>
+    </div>
   );
 }

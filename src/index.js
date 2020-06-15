@@ -7,26 +7,6 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import "./index.css";
 
-// const Context = React.createContext();
-// const Provider = ({ store, children }) => {
-//   const {
-//     dispatch,
-//     getState,
-//     replaceReducer,
-//     subscribe
-//   } = store;
-//   const [state, setState] = React.useState();
-//   React.useEffect(() => {
-//     subscribe(state => setState(state));
-//   }, [])
-
-//   return (
-//     <Context.Provider value={{ dispatch, getState, replaceReducer, subscribe }} children={children} />
-//   )
-// }
-
-// useSelector i useDispatch
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

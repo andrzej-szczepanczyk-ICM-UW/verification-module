@@ -4,9 +4,8 @@ export const ADD_DATA = "ADD_DATA";
 export const UPDATE_SLOPE = "UPDATE_SLOPE";
 export const UPDATE_INTERCEPT = "UPDATE_INTERCEPT";
 export const UPDATE_FILTERS = "UPDATE_FILTERS";
-export const UPDATE_NODE = "UPDATE_NODE";
 
-export const addData = (data, someotherData) => ({
+export const addData = (data) => ({
   type: ADD_DATA,
   payload: data,
 });
@@ -21,12 +20,7 @@ export const updateIntercept = (intercept) => ({
   intercept,
 });
 
-export const updateFilters = (filters) => ({
+export const updateFilters = (intercept) => ({
   type: UPDATE_FILTERS,
-  filters,
-});
-
-export const updateNode = (node) => ({
-  type: UPDATE_NODE,
-  node,
+  intercept,
 });

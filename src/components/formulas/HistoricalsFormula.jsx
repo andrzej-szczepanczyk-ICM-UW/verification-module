@@ -9,8 +9,11 @@ import queryString from "query-string";
 
 export function HistoricalsFormula() {
   const dispatch = useDispatch();
-  const { filters } = useSelector((state) => state.table);
-  const { node } = useSelector((state) => state.table);
+  const filters = useSelector((state) => state.table.filters);
+  const node = useSelector((state) => state.table.node);
+  const slope = useSelector((state) => state.table.slope);
+  const intercept = useSelector((state) => state.table.intercept);
+
   React.useEffect(() => {
     console.log(
       "data which I am going to send to servers as parameters are ",
@@ -19,7 +22,7 @@ export function HistoricalsFormula() {
     let isCancelled = false;
 
     fetch(
-      `http://localhost:3003/api/mongodata/?${queryString.stringify(filters)}`
+      `http://localhost:3001/api/mongodata?${queryString.stringify(filters)}`
     )
       // I ve tried to convert response in a json format
       .then((response) => response.json())
@@ -36,21 +39,14 @@ export function HistoricalsFormula() {
     };
   }, [filters, dispatch]);
 
-  console.log("update filters is !!!!!!!!!!!!", filters);
-  console.log("update node is !!!!!!!!!!!!", node);
-
   //const debouncedDispatch = debounce(dispatch, 100);
 
   const fillRowCol = () => {
-    let debouncedDispatch = debounce(dispatch, 1000);
-    debouncedDispatch(
-      updateNode({
-        id: 1,
-        row: 10,
-        col: 20,
-        description: "descr",
-      })
-    );
+    console.log("HEY, I am in fillRowCol!!");
+    console.log("my node values are: ", node);
+    console.log("my node values are: ", slope);
+    console.log("my node values are: ", intercept);
+    console.log("my node values are: ", filters);
   };
 
   const handleUpdateFilters = () => {
@@ -74,10 +70,11 @@ export function HistoricalsFormula() {
         <br></br>
         choose Node:
         <select onChange={fillRowCol}>
-          <option>łeba urban</option>
-          <option>łeba forest</option>
-          <option>Poligon Wojskowy Orzysz</option>
           <option>kotlina jeleniogórska</option>
+          <option>okolice suwałk</option>
+          <option>łeba forest</option>
+          <option>łeba urban</option>
+          <option>jeziora (Poligon woskowy ORZYSZ)</option>
         </select>
         <p id="rowText">row</p>
         <input id="rowInput"></input>

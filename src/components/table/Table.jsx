@@ -4,9 +4,9 @@ import { TableEntry } from "./TableEntry";
 import "./table.css";
 
 export function Table() {
-  const data = useSelector((state) => state.table.data);
-  console.warn("data is ", data);
-  const dates = Object.keys(data);
+  const forecast_data = useSelector((state) => state.table.forecast_data);
+  //const dates = Object.keys(forecast_data)
+  const dates = [];
 
   if (dates.length === 0) {
     return "Loading data...";
@@ -24,9 +24,9 @@ export function Table() {
         </tr>
       </thead>
       <tbody>
-        {/* {dates.map((date) => (
-          <TableEntry key={date} date={date} value={data[date]} />
-        ))} */}
+        {dates.map((date) => (
+          <TableEntry key={date} date={date} value={forecast_data[date]} />
+        ))}
       </tbody>
     </table>
   );
