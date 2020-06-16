@@ -142,7 +142,7 @@ app.get("/api/mongodata/filterbydate", async (req, res) => {
           row: Number(row),
           col: Number(col),
           date_um: {
-            $gt: new Date("2019-12-28T04:00:00+01:00"),
+            $gt: new Date("2019-12-29T04:00:00+01:00"),
             $lt: new Date("2019-12-30T04:00:00+01:00"),
           },
         },

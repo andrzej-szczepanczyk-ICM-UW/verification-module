@@ -2,10 +2,11 @@ import React from "react";
 import { debounce } from "debounce";
 import { useSelector, useDispatch } from "react-redux";
 
-import { updateFilters, updateNode } from "../../store/reducers/table/actions";
+import { updateHistoricalData } from "../../store/reducers/table/actions";
 
 import "./formulas.css";
-import queryString from "query-string";
+// import queryString from "query-string";
+// import { getStoredState } from "redux-persist";
 
 export function HistoricalsFormula() {
   const dispatch = useDispatch();
@@ -14,30 +15,31 @@ export function HistoricalsFormula() {
   const slope = useSelector((state) => state.table.slope);
   const intercept = useSelector((state) => state.table.intercept);
 
-  React.useEffect(() => {
-    console.log(
-      "data which I am going to send to servers as parameters are ",
-      filters
-    );
-    let isCancelled = false;
+  //ten kod będziesz bardziej rozwijać jak lepiej poznasz reacta
+  // React.useEffect(() => {
+  //   console.log(
+  //     "data which I am going to send to servers as parameters are ",
+  //     filters
+  //   );
+  //   let isCancelled = false;
 
-    fetch(
-      `http://localhost:3001/api/mongodata?${queryString.stringify(filters)}`
-    )
-      // I ve tried to convert response in a json format
-      .then((response) => response.json())
-      .then((data) => {
-        if (!isCancelled) {
-          // dispatch(setData(data))
-          console.log("Hey, setting data with my ", data);
-        }
-        console.log("Hey, I received an answer", data);
-      });
+  //   fetch(
+  //     //`http://localhost:3001/api/mongodata?${queryString.stringify(filters)}`
+  //     `http://localhost:3001/api/mongodata/filterbydate?row=211&col=233&start_forecast=2019-12-30T01:00:00+01:00`
+  //   )
+  //     // I ve tried to convert response in a json format
+  //     .then((data) => {
+  //       if (!isCancelled) {
+  //         // dispatch(setData(data))
+  //         console.log("Hey, setting data with my ", data);
+  //       }
+  //       console.log("Hey, I received an answer", data);
+  //     });
 
-    return () => {
-      isCancelled = true;
-    };
-  }, [filters, dispatch]);
+  //   return () => {
+  //     isCancelled = true;
+  //   };
+  // }, [filters, dispatch]);
 
   //const debouncedDispatch = debounce(dispatch, 100);
 
@@ -50,17 +52,31 @@ export function HistoricalsFormula() {
   };
 
   const handleUpdateFilters = () => {
-    let debouncedDispatch = debounce(dispatch, 1000);
-    debouncedDispatch(
-      updateFilters({
-        firstYear: 2016,
-        lastYear: 2019,
-        firstDate: "2010-06-01T00:00:00",
-        lastDate: "2010-10-01T00:00:00",
-        firstHour: 0,
-        lastHour: 21,
+    // let debouncedDispatch = debounce(dispatch, 1000);
+    // debouncedDispatch(
+    //   updateFilters({
+    //     firstYear: 2016,
+    //     lastYear: 2019,
+    //     firstDate: "2010-06-01T00:00:00",
+    //     lastDate: "2010-10-01T00:00:00",
+    //     firstHour: 0,
+    //     lastHour: 21,
+    //   })
+    //);
+
+    fetch(
+      //`http://localhost:3001/api/mongodata?${queryString.stringify(filters)}`
+      `http://localhost:3001/api/mongodata/filterbydate?row=211&col=233&start_forecast=2019-12-30T01:00:00+01:00`
+    )
+      .then((response) => {
+        return response.json();
       })
-    );
+      .then((res) => {
+        document.getElementById("mytextarea").innerHTML = res;
+        console.warn("data are: ", res);
+        let debouncedDispatch = debounce(dispatch, 1000);
+        debouncedDispatch(updateHistoricalData(res));
+      });
   };
 
   return (
@@ -173,6 +189,7 @@ export function HistoricalsFormula() {
           <option value="months">Group by months</option>
         </select>
         <br></br>
+        <textarea id="mytextarea"></textarea>
         <button onClick={handleUpdateFilters}>Run!</button>
       </>
     </div>

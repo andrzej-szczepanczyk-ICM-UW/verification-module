@@ -1,117 +1,58 @@
 import React from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import taucharts from "taucharts";
+//import { render } from "@testing-library/react";
 
-var chartData = [
-  {
-    team: "d",
-    cycleTime: 1,
-    effort: 1,
-    count: 1,
-    priority: "low",
-  },
-  {
-    team: "d",
-    cycleTime: 2,
-    effort: 2,
-    count: 5,
-    priority: "low",
-  },
-  {
-    team: "d",
-    cycleTime: 3,
-    effort: 3,
-    count: 8,
-    priority: "medium",
-  },
-  {
-    team: "d",
-    cycleTime: 4,
-    effort: 4,
-    count: 3,
-    priority: "high",
-  },
-  {
-    team: "l",
-    cycleTime: 2,
-    effort: 1,
-    count: 1,
-    priority: "low",
-  },
-  {
-    team: "l",
-    cycleTime: 3,
-    effort: 2,
-    count: 5,
-    priority: "low",
-  },
-  {
-    team: "l",
-    cycleTime: 4,
-    effort: 3,
-    count: 8,
-    priority: "medium",
-  },
-  {
-    team: "l",
-    cycleTime: 5,
-    effort: 4,
-    count: 3,
-    priority: "high",
-  },
-  {
-    team: "k",
-    cycleTime: 2,
-    effort: 4,
-    count: 1,
-    priority: "low",
-  },
-  {
-    team: "k",
-    cycleTime: 3,
-    effort: 5,
-    count: 5,
-    priority: "low",
-  },
-  {
-    team: "k",
-    cycleTime: 4,
-    effort: 6,
-    count: 8,
-    priority: "medium",
-  },
-  {
-    team: "k",
-    cycleTime: 5,
-    effort: 8,
-    count: 3,
-    priority: "high",
-  },
-];
+// let MyTauChart = React.createClass({
+//   displayName: 'MyTauChart',
+//   componentWillUnmount(){
+//     this._chart.destroy();
+//   },
+//   componentDidMount(){
+//     this._chart = new taucharts.Chart(Object.assign({}, this.props))
+//     this._chart.renderTo(this.refs.placeholder);
+//   },
+// })
 
-const config = {
-  type: "scatterplot",
-  x: "cycleTime",
-  y: "effort",
-  color: "team",
-  size: "count",
-  data: chartData,
-};
+// let ReactIgnore = React.createClass({
+//   displayName: 'ReactIgnore',
+//   shouldComponentUpdate: () => {return false},
+//   render(){
+//     return React.Children.only(this.props.children)
+//   }
+// })
+
 export function ChartHistoricals(props) {
-  const ref = useRef();
+  const { historical_data } = useSelector((state) => state.table);
+
+  const hist_config = {
+    type: "scatterplot",
+    x: "value_um",
+    y: "value_imgw",
+    data: [
+      { value_um: 1, value_imgw: 1 },
+      { value_um: 2, value_imgw: 2 },
+    ], //historical_data,
+  };
+  const ref = useRef(null);
   useEffect(() => {
-    const chart = new taucharts.Chart(config);
+    const chart = new taucharts.Chart(hist_config);
     chart.renderTo(ref.current);
     return () => {
       chart.destroy();
     };
   });
 
+  function check() {
+    console.warn("ChartHistoricals", historical_data);
+  }
+
   return (
     <>
       <div>Chart Historicals</div>
       <div ref={ref} />
+      <button onClick={check}>Check availability of data</button>
     </>
   );
 }

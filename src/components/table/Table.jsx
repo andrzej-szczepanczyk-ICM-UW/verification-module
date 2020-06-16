@@ -4,7 +4,7 @@ import { TableEntry } from "./TableEntry";
 import "./table.css";
 
 export function Table() {
-  const forecast_data = useSelector((state) => state.table.forecast_data);
+  const { forecast_data } = useSelector((state) => state.table);
   //const dates = Object.keys(forecast_data)
   const dates = [];
 
