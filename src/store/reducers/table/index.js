@@ -11,10 +11,7 @@ const defaultState = {
   slope: 0.15,
   intercept: 0.15,
   forecast_data: [],
-  historical_data: [
-    { value_um: 1, value_imgw: 1 },
-    { value_um: 2, value_imgw: 2 },
-  ],
+  historical_data: [],
   historical_filters: {
     firstYear: 2016,
     lastYear: 2019,
@@ -37,32 +34,32 @@ export function table(state = defaultState, action) {
       return {
         ...state,
         forecast_data: {
-          ...state.data,
-          ...action.payload,
+          ...state.forecast_data,
+          ...action.data,
         },
       };
     case UPDATE_HISTORICAL_DATA:
       return {
         ...state,
         historical_data: {
-          ...state.data,
-          ...action.payload,
+          ...state.historical_data,
+          ...action.data,
         },
       };
     case UPDATE_FORECAST_FILTERS:
       return {
         ...state,
         forecast_filters: {
-          ...state.data,
-          ...action.payload,
+          ...state.forecast_filters,
+          ...action.filters,
         },
       };
     case UPDATE_HISTORICAL_FILTERS:
       return {
         ...state,
         historical_filters: {
-          ...state.data,
-          ...action.payload,
+          ...state.historical_filters,
+          ...action.filters,
         },
       };
     case UPDATE_SLOPE:

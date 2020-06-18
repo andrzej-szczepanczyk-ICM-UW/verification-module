@@ -9,12 +9,12 @@ export const UPDATE_HISTORICAL_FILTERS = "UPDATE_HISTORICAL_FILTERS";
 
 export const updateForecastData = (data) => ({
   type: UPDATE_FORECAST_DATA,
-  payload: data,
+  data,
 });
 
 export const updateHistoricalData = (data) => ({
   type: UPDATE_HISTORICAL_DATA,
-  payload: data,
+  data,
 });
 
 export const updateForecastFilters = (filters) => ({

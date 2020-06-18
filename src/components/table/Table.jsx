@@ -13,21 +13,27 @@ export function Table() {
   }
 
   return (
-    <table className="table">
-      <thead>
-        <tr>
-          <td>date</td>
-          <td>um</td>
-          <td>p</td>
-          <td>description</td>
-          <td>imgw</td>
-        </tr>
-      </thead>
-      <tbody>
-        {dates.map((date) => (
-          <TableEntry key={date} date={date} value={forecast_data[date]} />
-        ))}
-      </tbody>
-    </table>
+    <>
+      <textarea>{forecast_data}</textarea>
+    </>
   );
+
+  // return (
+  //   <table className="table">
+  //     <thead>
+  //       <tr>
+  //         <td>date</td>
+  //         <td>um</td>
+  //         <td>p</td>
+  //         <td>description</td>
+  //         <td>imgw</td>
+  //       </tr>
+  //     </thead>
+  //     <tbody>
+  //       {dates.map((date) => (
+  //         <TableEntry key={date} date={date} value={forecast_data[date]} />
+  //       ))}
+  //     </tbody>
+  //   </table>
+  // );
 }

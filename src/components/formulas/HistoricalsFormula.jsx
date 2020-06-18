@@ -72,7 +72,11 @@ export function HistoricalsFormula() {
         return response.json();
       })
       .then((res) => {
-        document.getElementById("mytextarea").innerHTML = res;
+        document.getElementById("mytextarea").innerHTML = JSON.stringify(
+          res,
+          null,
+          2
+        );
         console.warn("data are: ", res);
         let debouncedDispatch = debounce(dispatch, 1000);
         debouncedDispatch(updateHistoricalData(res));
