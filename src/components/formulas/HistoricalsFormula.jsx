@@ -72,13 +72,13 @@ export function HistoricalsFormula() {
     let first = s.historical_filters.firstDate;
     let last = s.historical_filters.lastDate;
     let type = "forecast";
-    let query_string = `http:localhost:3001/api/mongodata/filterby${type}?row=${row}&col=${col}&firstDate=${first}&lastDate=${last}`;
+    let query_string = `http:localhost:3001/api/mongodata/filter?way=${type}&row=${row}&col=${col}&firstDate=${first}&lastDate=${last}`;
     console.log("state is", s);
     console.log("query_string is", query_string);
     fetch(query_string)
       .then((response) => {
-        let unpacked_res = JSON.stringify(response);
-        return unpacked_res; //response.json();
+        console.log("response is: ", response);
+        return response.json();
       })
       .then((res) => {
         document.getElementById("mytextarea").innerHTML = JSON.stringify(
@@ -114,13 +114,13 @@ export function HistoricalsFormula() {
           onChange={setFirstDate}
           id="firstDate"
           type="date"
-          defaultValue={"2010-06-01T00:00:00.000Z"}
+          defaultValue={"2019-01-01T00:00:00.000Z"}
         />
         <input
           id="lastDate"
           type="date"
           onChange={setLastDate}
-          defaultValue={"2010-10-01T00:00:00.000Z"}
+          defaultValue={"2019-03-01T00:00:00.000Z"}
         />
         <br></br>
         <textarea id="mytextarea"></textarea>

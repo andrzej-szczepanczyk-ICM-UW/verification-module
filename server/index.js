@@ -33,13 +33,12 @@ function fetchImgw(row, col) {
     .toArray((err, results) => {
       results.forEach((result) => {
         const key = `${result.date_imgw}`;
-        console.log("IMGW key: ", key);
+        //console.log("IMGW key: ", key);
         //console.log("IMGW record: ", result);
 
         imgw.set(key, result);
 
         //console.log("get result is:", imgw.get(key));
-
         // console.log(`imgw map hasss ${imgw.size} records`);
       });
     });
@@ -47,11 +46,13 @@ function fetchImgw(row, col) {
 
 //example fetch:
 //ONE TESTCASE - it works !!!
-//http://localhost:3001/api/mongodata/filterbyforecast?row=210&col=271&firstDate=2019-01-01T00:00:00.000Z&lastDate=2019-01-03T00:00:00.000Z
-app.get("/api/mongodata/filterbyforecast", async (req, res) => {
+//way - it takes
+//http://localhost:3001/api/mongodata/filter?way=forecast&row=210&col=271&firstDate=2019-01-01T00:00:00.000Z&lastDate=2019-01-03T00:00:00.000Z
+app.get("/api/mongodata/filter", async (req, res) => {
   //FIX - eliminate problem with data translations -> "+ vanish"
 
   console.log(
+    req.query.way,
     req.query.row,
     req.query.col,
     ",",
@@ -81,18 +82,23 @@ app.get("/api/mongodata/filterbyforecast", async (req, res) => {
 
   const startProfile = new Date();
 
+  let match_filter = 0;
+  if (req.query.way === "forecast") {
+    match_filter = {
+      row: Number(req.query.row),
+      col: Number(req.query.col),
+      start_forecast: {
+        $gte: new Date(req.query.firstDate),
+        $lte: new Date(req.query.lastDate),
+      },
+    };
+  }
+
   dbo
     .collection("UM")
     .aggregate([
       {
-        $match: {
-          row: Number(req.query.row),
-          col: Number(req.query.col),
-          start_forecast: {
-            $gte: new Date(req.query.firstDate),
-            $lte: new Date(req.query.lastDate),
-          },
-        },
+        $match: match_filter,
       },
       // {
       //   forecast_duration: {
@@ -119,17 +125,38 @@ app.get("/api/mongodata/filterbyforecast", async (req, res) => {
       res.send(
         result.map((value) => {
           const key = `${value.date_um}`;
-          console.log("UM: key is: ", key);
-          console.log("IMGW with key from UM ", imgw.get(key));
+          //console.log("UM: key is: ", key);
+          //console.log("IMGW with key from UM ", imgw.get(key));
           //console.log("valueproduct is ", value);
           const object = {
             ...imgw.get(key),
             ...value,
           };
 
-          //const { value_imgw, value_um, date_um, start_forecast } = object;
+          // console.log("SERVER: object is", object);
+
+          const { start_forecast, date_um, value_um, value_imgw } = object;
+          // console.log("SERVER: value_imgw is: ", value_imgw);
+          // console.log(
+          //   "SERVER: date_imgw is: ",
+          //   date_um,
+          //   "type is",
+          //   typeof date_um
+          // );
+          // console.log(
+          //   "SERVER: date_imgw stringify is: ",
+          //   JSON.stringify(date_um),
+          //   "type is",
+          //   typeof JSON.stringify(date_um)
+          // );
+
+          let date_um_str = JSON.stringify(date_um);
+          let start_forecast_str = JSON.stringify(start_forecast);
           return {
-            object,
+            //date_um_str,
+            // start_forecast_str,
+            value_um,
+            // value_imgw,
           };
         })
       );
