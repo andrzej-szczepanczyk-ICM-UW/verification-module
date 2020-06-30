@@ -8,7 +8,8 @@ import { debounce } from "debounce";
 
 export function TableConfig() {
   const dispatch = useDispatch();
-  const { slope, intercept } = useSelector((state) => state.table);
+  //const { slope, intercept } = useSelector((state) => state.table);
+  const s = useSelector((state) => state.table);
   const debouncedDispatch = debounce(dispatch, 100);
 
   const handleSlopeChange = (e) => {
@@ -26,20 +27,20 @@ export function TableConfig() {
           type="range"
           min="0"
           max="100"
-          defaultValue={slope * 100}
+          defaultValue={s.slope * 100}
           onChange={handleSlopeChange}
         />
       </div>
-      {slope}
+      {s.slope}
       <div>
         <input
           type="range"
           min="0"
           max="100"
-          defaultValue={intercept * 100}
+          defaultValue={s.intercept * 100}
           onChange={handleInterceptChange}
         />
-        {intercept}
+        {s.intercept}
       </div>
     </div>
   );

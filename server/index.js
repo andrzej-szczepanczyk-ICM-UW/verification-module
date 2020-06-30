@@ -29,167 +29,124 @@ function fetchImgw(row, col) {
           col: Number(col),
         },
       },
-      {
-        $project: {
-          date_imgw_str: {
-            $dateToString: {
-              date: "$date_imgw",
-            },
-          },
-          value_imgw: 1,
-        },
-      },
     ])
     .toArray((err, results) => {
       results.forEach((result) => {
-        const key = `${result.date_imgw_str.substr(0, 13)}`;
+        const key = `${result.date_imgw}`;
         console.log("IMGW key: ", key);
-        console.log("IMGW record: ", result);
+        //console.log("IMGW record: ", result);
 
         imgw.set(key, result);
+
+        //console.log("get result is:", imgw.get(key));
+
+        // console.log(`imgw map hasss ${imgw.size} records`);
       });
     });
 }
 
+//example fetch:
+//ONE TESTCASE - it works !!!
+//http://localhost:3001/api/mongodata/filterbyforecast?row=210&col=271&firstDate=2019-01-01T00:00:00.000Z&lastDate=2019-01-03T00:00:00.000Z
 app.get("/api/mongodata/filterbyforecast", async (req, res) => {
   //FIX - eliminate problem with data translations -> "+ vanish"
-  const { row, col, start_forecast } = req.query;
-  console.log(row, col, start_forecast, ",");
 
-  fetchImgw(row, col);
+  console.log(
+    req.query.row,
+    req.query.col,
+    ",",
+    req.query.firstDate,
+    req.query.lastDate
+  );
 
+  fetchImgw(req.query.row, req.query.col);
+  console.log("before await");
   await imgwPromise;
+  console.log("after await");
 
-  console.log(imgw);
+  console.log("imgw IS", imgw);
+
+  console.log("");
 
   //for time measure purposes
-  const startDate = new Date();
+  //const startProfile = new Date();
+  console.log(
+    "start forecast is",
+    req.query.firstDate,
+    "from query is",
+    "2019-01-01T00:00:00.000Z",
+    "IS IT EQUAL?????",
+    req.query.lastDate === "2019-01-01T00:00:00.000Z"
+  );
+
+  const startProfile = new Date();
 
   dbo
     .collection("UM")
     .aggregate([
       {
         $match: {
-          row: Number(row),
-          col: Number(col),
-          start_forecast: new Date("2019-12-30T01:00:00+01:00"), //start_forecast ? ISODate(start_forecast) : undefined,
-        },
-      },
-      {
-        $project: {
-          date_um_str: {
-            $dateToString: {
-              date: "$date_um",
-            },
+          row: Number(req.query.row),
+          col: Number(req.query.col),
+          start_forecast: {
+            $gte: new Date(req.query.firstDate),
+            $lte: new Date(req.query.lastDate),
           },
-          value_um: 1,
         },
       },
+      // {
+      //   forecast_duration: {
+      //     $divide: [
+      //       {
+      //         $subtract: ["$date_um", "$start_forecast"], //różnica w milisekundach
+      //       },
+      //       1000 * 3600,
+      //     ],
+      //   },
+      // },
     ])
     .toArray((err, result) => {
-      console.log("UM query result is: ", result);
-
-      const endDate = new Date();
+      const endProfile = new Date();
       if (err) {
-        console.log("time", +endDate - +startDate);
+        //console.log("time", +endProfile - +startProfile);
         res.send(err);
         throw err;
       }
-      console.log(JSON.stringify(result));
-      console.log("time", +endDate - +startDate);
+      //console.log(JSON.stringify(result));
+      //console.log("time", +endProfile - +startProfile);
+      //console.log("UM is", result);
+      //console.log("IMGW resultS KEYS ARE", imgw.keys());
       res.send(
         result.map((value) => {
-          const key = `${value.date_um_str}`;
+          const key = `${value.date_um}`;
           console.log("UM: key is: ", key);
-          console.log("getkeyproduct is ", imgw.get(key.substr(0, 13)));
-          console.log("valueproduct is ", value);
+          console.log("IMGW with key from UM ", imgw.get(key));
+          //console.log("valueproduct is ", value);
           const object = {
-            ...imgw.get(key.substr(0, 13)),
+            ...imgw.get(key),
             ...value,
           };
 
-          const { value_imgw, date_imgw_str, value_um, date_um_str } = object;
+          //const { value_imgw, value_um, date_um, start_forecast } = object;
           return {
-            value_imgw,
-            date_imgw_str,
-            date_um_str,
-            value_um,
+            object,
           };
         })
       );
     });
 });
 
-app.get("/api/mongodata/filterbydate", async (req, res) => {
-  //FIX - eliminate problem with data translations -> "+ vanish"
-  const { row, col, start_forecast } = req.query;
-  console.log(row, col, start_forecast, ",");
-
-  fetchImgw(row, col);
-
-  await imgwPromise;
-
-  console.log(imgw);
-
-  //for time measure purposes
-  const startDate = new Date();
-
+app.get("/api/mongodata/listnodes", async (req, res) => {
+  console.log("I am in load nodes section");
   dbo
     .collection("UM")
-    .aggregate([
-      {
-        $match: {
-          row: Number(row),
-          col: Number(col),
-          date_um: {
-            $gt: new Date("2019-12-29T04:00:00+01:00"),
-            $lt: new Date("2019-12-30T04:00:00+01:00"),
-          },
-        },
-      },
-      {
-        $project: {
-          date_um_str: {
-            $dateToString: {
-              date: "$date_um",
-            },
-          },
-          value_um: 1,
-          date_um: 1,
-        },
-      },
-    ])
+    .aggregate([{ $project: { row: 1, col: 1, _id: 0 } }])
     .toArray((err, result) => {
-      console.log("UM query result is: ", result);
-
-      const endDate = new Date();
-      if (err) {
-        console.log("time", +endDate - +startDate);
-        res.send(err);
-        throw err;
-      }
-      console.log(JSON.stringify(result));
-      console.log("time", +endDate - +startDate);
-      res.send(
-        result.map((value) => {
-          const key = `${value.date_um_str}`;
-          console.log("UM: key is: ", key);
-          console.log("getkeyproduct is ", imgw.get(key.substr(0, 13)));
-          console.log("valueproduct is ", value);
-          const object = {
-            ...imgw.get(key.substr(0, 13)),
-            ...value,
-          };
-
-          const { value_imgw, date_imgw_str, value_um, date_um_str } = object;
-          return {
-            value_imgw,
-            date_imgw_str,
-            date_um_str,
-            value_um,
-          };
-        })
-      );
+      let rowcolMap = new Map();
+      result.map((point) => {
+        rowcolMap.set(1000 * point.row + point.col, point);
+      });
+      res.send([...rowcolMap.values()]);
     });
 });
 

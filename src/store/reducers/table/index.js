@@ -13,14 +13,10 @@ const defaultState = {
   forecast_data: [],
   historical_data: [],
   historical_filters: {
-    firstYear: 2016,
-    lastYear: 2019,
     firstDate: "2010-06-01T00:00:00",
     lastDate: "2010-10-01T00:00:00",
-    firstHour: 0,
-    lastHour: 21,
-    row: 211,
-    col: 233,
+    row: 11,
+    col: 33,
   },
 
   forecast_filters: {
@@ -59,7 +55,7 @@ export function table(state = defaultState, action) {
         ...state,
         historical_filters: {
           ...state.historical_filters,
-          ...action.filters,
+          ...action.hist_filters,
         },
       };
     case UPDATE_SLOPE:

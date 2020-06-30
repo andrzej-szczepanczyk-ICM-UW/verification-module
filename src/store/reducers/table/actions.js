@@ -22,9 +22,9 @@ export const updateForecastFilters = (filters) => ({
   filters,
 });
 
-export const updateHistoricalsFilters = (filters) => ({
+export const updateHistoricalFilters = (hist_filters) => ({
   type: UPDATE_HISTORICAL_FILTERS,
-  filters,
+  hist_filters,
 });
 
 export const updateSlope = (slope) => ({
