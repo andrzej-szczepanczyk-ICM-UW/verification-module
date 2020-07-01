@@ -8,7 +8,7 @@ export function ForecastFormula() {
 
   return (
     <>
-      <div id="formulas">Forecast FORMULA.</div>
+      <div id="formulas"></div>
       Choose Date of forecast:
       <input type="date"></input>
       <button>Load Forecast</button>

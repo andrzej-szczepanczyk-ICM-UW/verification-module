@@ -95,7 +95,6 @@ export function HistoricalsFormula() {
   return (
     <div id="TableConfig">
       <>
-        Historicals FORMULA
         <br></br>
         choose Node:
         <select onChange={fillRowCol} value={s.historical_filters.row}>
