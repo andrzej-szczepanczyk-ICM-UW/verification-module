@@ -10,6 +10,11 @@ const defaultData = {
   data: [
     { value_um: 1, value_imgw: 1 },
     { value_um: 2, value_imgw: 2 },
+    { value_um: 2, value_imgw: 2 },
+    { value_um: 2, value_imgw: 5 },
+    { value_um: 2, value_imgw: 5.5 },
+    { value_um: 2, value_imgw: 5.7 },
+    { value_um: 2, value_imgw: 6 },
   ],
 };
 
