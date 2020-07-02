@@ -28,6 +28,7 @@ const defaultData = {
   y: "value_imgw",
   color: "category",
   data: preprocessforTaucharts(um, imgw),
+  plugins: 
 };
 
 export function ChartHistoricals(props) {
