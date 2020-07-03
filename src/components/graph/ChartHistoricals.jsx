@@ -49,5 +49,3 @@ export function ChartHistoricals(props) {
     </>
   );
 }
-
-//remo

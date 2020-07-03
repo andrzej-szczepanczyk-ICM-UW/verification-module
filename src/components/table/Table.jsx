@@ -12,11 +12,7 @@ export function Table() {
     return "Loading data...";
   }
 
-  return (
-    <>
-      <textarea>{forecast_data}</textarea>
-    </>
-  );
+  return <textarea>{forecast_data}</textarea>;
 
   // return (
   //   <table className="table">

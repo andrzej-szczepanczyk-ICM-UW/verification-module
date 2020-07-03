@@ -8,13 +8,12 @@ import {
 } from "../../store/reducers/table/actions";
 
 import "./formulas.css";
-// import queryString from "query-string";
-// import { getStoredState } from "redux-persist";
+
+const nodeToString = ({ row, col }) => `${row}, ${col}`;
 
 export function HistoricalsFormula() {
-  //redux management
   const dispatch = useDispatch();
-  const s = useSelector((state) => state.table);
+  const s = useSelector((state) => state.table); // change s to table
   const debouncedDispatch = debounce(dispatch, 100);
 
   const setFirstDate = (e) => {
@@ -25,11 +24,11 @@ export function HistoricalsFormula() {
       typeof e.target.value
     );
 
-    let new_historical_filters = s.historical_filters;
+    const new_historical_filters = { ...s.historical_filters };
     new_historical_filters.firstDate = `${e.target.value}T00:00:00.000Z`;
     console.log(s.historical_filters);
 
-    debouncedDispatch(updateHistoricalFilters(s.historical_filters));
+    debouncedDispatch(updateHistoricalFilters(new_historical_filters));
   };
 
   const setLastDate = (e) => {
@@ -40,14 +39,14 @@ export function HistoricalsFormula() {
       typeof e.target.value
     );
 
-    let new_historical_filters = s.historical_filters;
+    const new_historical_filters = { ...s.historical_filters };
     new_historical_filters.lastDate = `${e.target.value}T00:00:00.000Z`;
     console.log(s.historical_filters);
 
-    debouncedDispatch(updateHistoricalFilters(s.historical_filters));
+    debouncedDispatch(updateHistoricalFilters(new_historical_filters));
   };
 
-  let our_nodes = [
+  const our_nodes = [
     { row: 211, col: 233 },
     { row: 1, col: 2 },
     { row: 11, col: 22 },
@@ -59,22 +58,22 @@ export function HistoricalsFormula() {
     console.log("col is ", s.historical_filters.col);
     console.log("event is:", e);
 
-    let new_historical_filters = s.historical_filters;
-    new_historical_filters.row = 210; //e.target.value.row;
-    new_historical_filters.col = 271; //e.target.value.col;
-    console.log(s.historical_filters);
+    let new_historical_filters = { ...s.historical_filters };
+    const [row, col] = e.target.value.split(", ");
+    new_historical_filters.row = row;
+    new_historical_filters.col = col;
+
     debouncedDispatch(updateHistoricalFilters(new_historical_filters));
   };
 
-  let handleUpdateFilters = () => {
-    let row = s.historical_filters.row;
-    let col = s.historical_filters.col;
-    let first = s.historical_filters.firstDate;
-    let last = s.historical_filters.lastDate;
+  const handleUpdateFilters = () => {
+    const { row, col, firstDate, lastDate } = s.historical_filters;
+
     let type = "forecast";
-    let query_string = `http:localhost:3001/api/mongodata/filter?way=${type}&row=${row}&col=${col}&firstDate=${first}&lastDate=${last}`;
+    let query_string = `http://localhost:3001/api/mongodata/filter?way=${type}&row=${row}&col=${col}&firstDate=${firstDate}&lastDate=${lastDate}`;
     console.log("state is", s);
     console.log("query_string is", query_string);
+
     fetch(query_string)
       .then((response) => {
         console.log("response is: ", response);
@@ -92,39 +91,46 @@ export function HistoricalsFormula() {
       });
   };
 
+  const currentNodeStr = nodeToString(s.historical_filters);
+
   return (
     <div id="TableConfig">
-      <>
-        <br></br>
-        choose Node:
-        <select onChange={fillRowCol} value={s.historical_filters.row}>
-          {our_nodes.map((node, key) => (
-            <option key={key} value={node}>
-              {node.row + ", " + node.col}
+      choose Node:
+      <select onChange={fillRowCol} value={currentNodeStr}>
+        {our_nodes.map((node) => {
+          const nodeStr = nodeToString(node);
+
+          return (
+            <option
+              key={nodeStr}
+              value={nodeStr}
+              selected={nodeStr === currentNodeStr}
+            >
+              {nodeStr}
             </option>
-          ))}
-        </select>
-        <p id="rowText">row</p>
-        <input id="rowInput" value={s.historical_filters.row}></input>
-        <p id="colText">col</p>
-        <input id="colInput" value={s.historical_filters.col}></input>
-        <p id="colText">Choose Date range</p>
-        <input
-          onChange={setFirstDate}
-          id="firstDate"
-          type="date"
-          defaultValue={"2019-01-01T00:00:00.000Z"}
-        />
-        <input
-          id="lastDate"
-          type="date"
-          onChange={setLastDate}
-          defaultValue={"2019-03-01T00:00:00.000Z"}
-        />
-        <br></br>
-        <textarea id="mytextarea"></textarea>
-        <button onClick={handleUpdateFilters}>Run!</button>
-      </>
+          );
+        })}
+      </select>
+      <p id="rowText">row</p>
+      <input id="rowInput" value={s.historical_filters.row}></input>
+      <p id="colText">col</p>
+      <input id="colInput" value={s.historical_filters.col}></input>
+      <p id="colText">Choose Date range</p>
+      <input
+        onChange={setFirstDate}
+        id="firstDate"
+        type="date"
+        defaultValue={s.historical_filters.firstDate?.substring(0, 10)}
+      />
+      <input
+        id="lastDate"
+        type="date"
+        onChange={setLastDate}
+        defaultValue={s.historical_filters.lastDate?.substring(0, 10)}
+      />
+      <br></br>
+      <textarea id="mytextarea"></textarea>
+      <button onClick={handleUpdateFilters}>Run!</button>
     </div>
   );
 }

@@ -9,27 +9,21 @@ export function TableEntry({ date, value }) {
   const momentDate = moment(date);
   const emptyArray = new Array(value.len_series).fill(true);
 
-  return (
-    <>
-      {emptyArray.map((x, index) => {
-        const currentDate = moment(+momentDate)
-          .add(moment.duration(index, "hours"))
-          .format("YYYY-MM-DDTHH:00:00");
+  return emptyArray.map((x, index) => {
+    const currentDate = moment(+momentDate)
+      .add(moment.duration(index, "hours"))
+      .format("YYYY-MM-DDTHH:00:00");
 
-        const p = computeMockSigmoid(value.um[index], slope, intercept).toFixed(
-          5
-        );
+    const p = computeMockSigmoid(value.um[index], slope, intercept).toFixed(5);
 
-        return (
-          <tr key={currentDate}>
-            <td>{currentDate}</td>
-            <td>{value.um[index]}</td>
-            <td>{p}</td>
-            <td>brak przymrozka</td>
-            <td>{value.imgw[index]}</td>
-          </tr>
-        );
-      })}
-    </>
-  );
+    return (
+      <tr key={currentDate}>
+        <td>{currentDate}</td>
+        <td>{value.um[index]}</td>
+        <td>{p}</td>
+        <td>brak przymrozka</td>
+        <td>{value.imgw[index]}</td>
+      </tr>
+    );
+  });
 }

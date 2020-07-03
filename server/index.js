@@ -155,8 +155,11 @@ app.get("/api/mongodata/filter", async (req, res) => {
           return {
             //date_um_str,
             // start_forecast_str,
-            value_um,
+            // value_um,
             // value_imgw,
+            ...object,
+            date_um_str,
+            start_forecast_str,
           };
         })
       );
