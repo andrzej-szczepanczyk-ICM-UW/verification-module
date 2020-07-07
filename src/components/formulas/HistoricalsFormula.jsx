@@ -47,6 +47,7 @@ export function HistoricalsFormula() {
   };
 
   const our_nodes = [
+    { row: 205, col: 265 },
     { row: 211, col: 233 },
     { row: 1, col: 2 },
     { row: 11, col: 22 },

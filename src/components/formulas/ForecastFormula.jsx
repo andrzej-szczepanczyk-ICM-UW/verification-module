@@ -10,7 +10,7 @@ export function ForecastFormula() {
     <>
       <div id="formulas"></div>
       Choose Date of forecast:
-      <input type="date"></input>
+      <input type="date" defaultValue="2010-10-01"></input>
       <button>Load Forecast</button>
     </>
   );

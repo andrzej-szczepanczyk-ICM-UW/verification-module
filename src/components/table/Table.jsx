@@ -5,12 +5,6 @@ import "./table.css";
 
 export function Table() {
   const { forecast_data } = useSelector((state) => state.table);
-  //const dates = Object.keys(forecast_data)
-  const dates = [];
-
-  if (dates.length === 0) {
-    return "Loading data...";
-  }
 
   return <textarea>{forecast_data}</textarea>;
 
@@ -26,8 +20,8 @@ export function Table() {
   //       </tr>
   //     </thead>
   //     <tbody>
-  //       {dates.map((date) => (
-  //         <TableEntry key={date} date={date} value={forecast_data[date]} />
+  //       {forecast_data.map((moment) => (
+  //         //<TableEntry key={moment['um']} date={moment['um']} value={moment['']} />
   //       ))}
   //     </tbody>
   //   </table>
