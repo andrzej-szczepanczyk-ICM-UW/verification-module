@@ -4,7 +4,8 @@ import { TableEntry } from "./TableEntry";
 import "./table.css";
 
 export function Table() {
-  const { forecast_data } = useSelector((state) => state.table);
+  const table = useSelector((state) => state.table);
+  const forecast_data = table.forecast_data;
 
   return <textarea>{forecast_data}</textarea>;
 

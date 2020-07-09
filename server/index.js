@@ -61,24 +61,24 @@ app.get("/api/mongodata/filter", async (req, res) => {
   );
 
   fetchImgw(req.query.row, req.query.col);
-  console.log("before await");
+  //console.log("before await");
   await imgwPromise;
-  console.log("after await");
+  //console.log("after await");
 
-  console.log("imgw IS", imgw);
+  //console.log("imgw IS", imgw);
 
-  console.log("");
+  //console.log("");
 
   //for time measure purposes
   //const startProfile = new Date();
-  console.log(
-    "start forecast is",
-    req.query.firstDate,
-    "from query is",
-    "2019-01-01T00:00:00.000Z",
-    "IS IT EQUAL?????",
-    req.query.lastDate === "2019-01-01T00:00:00.000Z"
-  );
+  //console.log(
+  //   "start forecast is",
+  //   req.query.firstDate,
+  //   "from query is",
+  //   "2019-01-01T00:00:00.000Z",
+  //   "IS IT EQUAL?????",
+  //   req.query.lastDate === "2019-01-01T00:00:00.000Z"
+  // );
 
   const startProfile = new Date();
 

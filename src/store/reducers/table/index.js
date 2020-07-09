@@ -14,13 +14,13 @@ const defaultState = {
   historical_data: [],
   historical_filters: {
     firstDate: "2019-01-01T00:00:00",
-    lastDate: "2019-03-01T00:00:00",
-    row: 11,
-    col: 33,
+    lastDate: "2019-01-03T00:00:00",
+    row: 205,
+    col: 265,
   },
 
   forecast_filters: {
-    forecastDate: "2010-10-01T00:00:00",
+    forecastDate: "2019-01-04T00:00:00",
   },
 };
 
