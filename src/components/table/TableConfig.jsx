@@ -23,6 +23,9 @@ export function TableConfig() {
   return (
     <div>
       <div>
+        Sigmoid: slope
+        <b>{table.slope}</b>
+        <br />
         <input
           type="range"
           min="0"
@@ -31,8 +34,11 @@ export function TableConfig() {
           onChange={handleSlopeChange}
         />
       </div>
-      {table.slope}
+
       <div>
+        Sigmoid: intercept
+        <b>{table.intercept}</b>
+        <br />
         <input
           type="range"
           min="0"
@@ -40,7 +46,9 @@ export function TableConfig() {
           defaultValue={table.intercept * 100}
           onChange={handleInterceptChange}
         />
-        {table.intercept}
+      </div>
+      <div>
+        Wartość progowa: <b>10%</b>
       </div>
     </div>
   );

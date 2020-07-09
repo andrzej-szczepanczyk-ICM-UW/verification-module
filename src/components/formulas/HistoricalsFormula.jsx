@@ -80,15 +80,13 @@ export function HistoricalsFormula() {
         console.log("HistoricalsFormula: response is: ", response);
         return response.json();
       })
-      .then((res) => {
-        document.getElementById("mytextarea").innerHTML = JSON.stringify(
-          res,
-          null,
-          2
-        );
-        console.warn("data are: ", res);
+      .then((jres) => {
+        document.getElementById(
+          "myHistoricalstextarea"
+        ).innerHTML = JSON.stringify(jres, null, 2);
+        console.warn("data are: ", jres);
         let debouncedDispatch = debounce(dispatch, 1000);
-        debouncedDispatch(updateHistoricalData(res));
+        debouncedDispatch(updateHistoricalData(jres));
       });
   };
 
@@ -130,7 +128,7 @@ export function HistoricalsFormula() {
         defaultValue={table.historical_filters.lastDate?.substring(0, 10)}
       />
       <br></br>
-      <textarea id="mytextarea"></textarea>
+      <textarea id="myHistoricalstextarea"></textarea>
       <button onClick={handleUpdateFilters}>Run!</button>
     </div>
   );
