@@ -24,17 +24,21 @@ export function ForecastFormula() {
     console.log("ForecastFormula: query is:", query);
     fetch(query)
       .then((response) => {
-        console.log("response is: ", response);
+        //console.log("response is: ", response);
         return response.json();
       })
       .then((jres) => {
+        //jres.map((v) => console.log("row is:", v));
+        //console.log("Forecast Formula: IS ", jres);
+        //console.warn("ForecastFormula: data are: ", jres);
+        debouncedDispatch(updateForecastData(jres));
+
         document.getElementById("myForecastextarea").innerHTML = JSON.stringify(
-          jres,
+          forecast_data,
           null,
           2
         );
-        //console.warn("ForecastFormula: data are: ", jres);
-        debouncedDispatch(updateForecastData(jres));
+        //console.log("forecast_data is", forecast_data);
       });
   };
 
@@ -46,8 +50,8 @@ export function ForecastFormula() {
     //   typeof e.target.value
     // );
     const new_forecast_filters = { ...table.forecast_filters };
-    new_forecast_filters.firstDate = `${e.target.value}T00:00:00.000Z`;
-    console.log(table.forecast_filters);
+    new_forecast_filters.forecastDate = `${e.target.value}T00:00:00.000Z`;
+    //console.log(table.forecast_filters);
 
     debouncedDispatch(updateForecastFilters(new_forecast_filters));
   };

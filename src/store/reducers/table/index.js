@@ -8,8 +8,8 @@ import {
 } from "./actions";
 
 const defaultState = {
-  slope: 0.15,
-  intercept: 0.15,
+  slope: 0.97,
+  intercept: 0.084,
   forecast_data: [],
   historical_data: [],
   historical_filters: {
@@ -29,10 +29,7 @@ export function table(state = defaultState, action) {
     case UPDATE_FORECAST_DATA:
       return {
         ...state,
-        forecast_data: {
-          ...state.forecast_data,
-          ...action.data,
-        },
+        forecast_data: [...action.data],
       };
     case UPDATE_HISTORICAL_DATA:
       return {

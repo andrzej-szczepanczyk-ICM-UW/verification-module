@@ -81,12 +81,12 @@ export function HistoricalsFormula() {
         return response.json();
       })
       .then((jres) => {
+        debouncedDispatch(updateHistoricalData(jres));
+
         document.getElementById(
           "myHistoricalstextarea"
-        ).innerHTML = JSON.stringify(jres, null, 2);
+        ).innerHTML = JSON.stringify(table.historical_data, null, 2);
         console.warn("data are: ", jres);
-        let debouncedDispatch = debounce(dispatch, 1000);
-        debouncedDispatch(updateHistoricalData(jres));
       });
   };
 
