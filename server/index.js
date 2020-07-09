@@ -83,6 +83,7 @@ app.get("/api/mongodata/filter", async (req, res) => {
   const startProfile = new Date();
 
   let match_filter = 0;
+
   if (req.query.way === "forecast") {
     match_filter = {
       row: Number(req.query.row),
@@ -91,6 +92,14 @@ app.get("/api/mongodata/filter", async (req, res) => {
         $gte: new Date(req.query.firstDate),
         $lte: new Date(req.query.lastDate),
       },
+    };
+  }
+
+  if (req.query.way === "oneforecast") {
+    match_filter = {
+      row: Number(req.query.row),
+      col: Number(req.query.col),
+      start_forecast: new Date(req.query.forecastDate),
     };
   }
 
