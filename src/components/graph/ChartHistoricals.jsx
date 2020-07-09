@@ -3,14 +3,32 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import taucharts from "taucharts";
 
+let um = [
+  { value_um: 0, value_imgw: 5.7, category: "forecast" },
+  { value_um: 0, value_imgw: 6, category: "forecast" },
+];
+
+let imgw = [
+  { value_um: 2, value_imgw: 10.7, category: "forecast" },
+  { value_um: 2, value_imgw: 16, category: "forecast" },
+];
+
+function preprocessforTaucharts(um, imgw) {
+  let diagonal = imgw.map((point) => ({
+    value_um: point.value_imgw,
+    value_imgw: point.value_imgw,
+    category: "diagonal",
+  }));
+  return um.concat(imgw.concat(diagonal));
+}
+
 const defaultData = {
   type: "scatterplot",
   x: "value_um",
   y: "value_imgw",
-  data: [
-    { value_um: 1, value_imgw: 1 },
-    { value_um: 2, value_imgw: 2 },
-  ],
+  color: "category",
+  data: preprocessforTaucharts(um, imgw),
+  plugins: 
 };
 
 export function ChartHistoricals(props) {
