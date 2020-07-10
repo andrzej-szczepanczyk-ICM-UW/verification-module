@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import taucharts from "taucharts";
+import Taucharts from "taucharts";
 
 let um = [
   { value_um: 0, value_imgw: 5.7, category: "forecast" },
@@ -28,7 +28,10 @@ const defaultData = {
   y: "value_imgw",
   color: "category",
   data: preprocessforTaucharts(um, imgw),
-  plugins: 
+  plugins: [
+    Taucharts.api.plugins.get("tooltip"),
+    Taucharts.api.plugins.get("legend"),
+  ],
 };
 
 export function ChartHistoricals(props) {
@@ -53,7 +56,7 @@ export function ChartHistoricals(props) {
   }, [historical_data, forecast_data]);
 
   useEffect(() => {
-    const chart = new taucharts.Chart(state);
+    const chart = new Taucharts.Chart(state);
     chart.renderTo(ref.current);
     return () => {
       chart.destroy();
