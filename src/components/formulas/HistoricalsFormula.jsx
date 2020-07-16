@@ -93,7 +93,7 @@ export function HistoricalsFormula() {
   const currentNodeStr = nodeToString(table.historical_filters);
 
   return (
-    <div id="TableConfig">
+    <div id="StatisticalsFormula">
       choose Node:
       <select onChange={fillRowCol} value={currentNodeStr}>
         {our_nodes.map((node) => {

@@ -34,10 +34,7 @@ export function table(state = defaultState, action) {
     case UPDATE_HISTORICAL_DATA:
       return {
         ...state,
-        historical_data: {
-          ...state.historical_data,
-          ...action.data,
-        },
+        historical_data: [...action.data],
       };
     case UPDATE_FORECAST_FILTERS:
       return {

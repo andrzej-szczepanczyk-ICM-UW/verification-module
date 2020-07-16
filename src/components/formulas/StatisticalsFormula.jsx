@@ -6,7 +6,7 @@ import {
 } from "../../store/reducers/table/actions";
 import { debounce } from "debounce";
 
-export function TableConfig() {
+export function StatisticalsFormula() {
   const dispatch = useDispatch();
   //const { slope, intercept } = useSelector((state) => state.table);
   const table = useSelector((state) => state.table);

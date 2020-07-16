@@ -2,11 +2,11 @@ import React from "react";
 
 import { ForecastFormula } from "../formulas/ForecastFormula";
 import { Table } from "../table/Table";
-import { TableConfig } from "../table/TableConfig";
+import { StatisticalsFormula } from "../formulas/StatisticalsFormula";
 
 import { HistoricalsFormula } from "../formulas/HistoricalsFormula";
 import { ChartHistoricals } from "../graph/ChartHistoricals";
-import { ChartProbability } from "../graph/ChartProbability";
+import { Effectiveness } from "../graph/Effectiveness";
 
 import "./dashboard.css";
 
@@ -35,13 +35,13 @@ export function Dashboard() {
     <div id="dashboard">
       <div id="forecast-column">
         <ForecastFormula class="formulas"></ForecastFormula>
-        <TableConfig class="settings"></TableConfig>
+        <StatisticalsFormula class="settings"></StatisticalsFormula>
         <Table class="formulas"></Table>
       </div>
       <div id="historicals-column">
         <HistoricalsFormula class="formulas"></HistoricalsFormula>
         <ChartHistoricals class="chart"></ChartHistoricals>
-        <ChartProbability class="chart"></ChartProbability>
+        <Effectiveness></Effectiveness>
       </div>
     </div>
   );
