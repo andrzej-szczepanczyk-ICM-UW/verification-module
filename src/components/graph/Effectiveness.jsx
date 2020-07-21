@@ -91,14 +91,14 @@ export function Effectiveness(props) {
     }));
   }, [historical_data, forecast_data]);
 
-  useEffect(() => {
-    console.log("CharEffectiveness: state is", state);
-    const chart = new Taucharts.Chart(state);
-    chart.renderTo(ref.current);
-    return () => {
-      chart.destroy();
-    };
-  }, [state]);
+  // useEffect(() => {
+  //   console.log("CharEffectiveness: state is", state);
+  //   const chart = new Taucharts.Chart(state);
+  //   chart.renderTo(ref.current);
+  //   return () => {
+  //     chart.destroy();
+  //   };
+  // }, [state]);
 
   return (
     <>

@@ -13,11 +13,23 @@ export function StatisticalsFormula() {
   const debouncedDispatch = debounce(dispatch, 100);
 
   const handleSlopeChange = (e) => {
-    debouncedDispatch(updateSlope(Number(e.target.value) / 100));
+    debouncedDispatch(updateSlope(Number(e.target.value)));
   };
 
   const handleInterceptChange = (e) => {
-    debouncedDispatch(updateIntercept(Number(e.target.value) / 100));
+    debouncedDispatch(updateIntercept(Number(e.target.value)));
+  };
+
+  const changeSelect = (e) => {
+    var slope = e.target[e.target.selectedIndex].attributes.getNamedItem(
+      "slope"
+    ).value;
+    var intercept = e.target[e.target.selectedIndex].attributes.getNamedItem(
+      "intercept"
+    ).value;
+    console.log("slope: ", slope, "inter", intercept);
+    debouncedDispatch(updateIntercept(Number(intercept)));
+    debouncedDispatch(updateSlope(Number(slope)));
   };
 
   return (
@@ -47,6 +59,16 @@ export function StatisticalsFormula() {
           onChange={handleInterceptChange}
         />
       </div>
+      <form name="ParametersSet1">
+        <select onChange={changeSelect} name="mySelect">
+          <option slope="0.97" intercept="0.084">
+            air
+          </option>
+          <option slope="0.34" intercept="3.2">
+            ground
+          </option>
+        </select>
+      </form>
       <div>
         Wartość progowa: <b>10%</b>
       </div>
