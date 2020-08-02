@@ -7,6 +7,7 @@ import { StatisticalsFormula } from "../formulas/StatisticalsFormula";
 import { HistoricalsFormula } from "../formulas/HistoricalsFormula";
 import { ChartHistoricals } from "../graph/ChartHistoricals";
 import { Effectiveness } from "../graph/Effectiveness";
+import { MockEffectiveness } from "../graph/MockEffectiveness";
 
 import "./dashboard.css";
 
@@ -41,7 +42,7 @@ export function Dashboard() {
       <div id="historicals-column">
         <HistoricalsFormula class="formulas"></HistoricalsFormula>
         <ChartHistoricals class="chart"></ChartHistoricals>
-        <Effectiveness></Effectiveness>
+        <MockEffectiveness></MockEffectiveness>
       </div>
     </div>
   );

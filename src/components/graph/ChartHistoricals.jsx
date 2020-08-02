@@ -3,8 +3,6 @@ import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import tauCharts from "taucharts";
 
-import moment from "moment";
-
 // const taggedForecast = forecast.map((point) => ({
 //   value_um: point.value_um,
 //   value_imgw: point.value_imgw,
@@ -31,7 +29,6 @@ const defaultData = {
 };
 
 function tagHist(hist) {
-  console.log("hist is:", hist);
   return hist
     .map((point) => ({
       value_um: point.value_um,
@@ -52,7 +49,7 @@ function tagForecast(forecast) {
     .filter((point) => !isNaN(point.value_imgw));
 }
 
-export function ChartHistoricals(props) {
+export function ChartHistoricals() {
   const ref = useRef();
   const [state, setState] = React.useState(defaultData);
 
@@ -77,8 +74,6 @@ export function ChartHistoricals(props) {
     //   { value_um: 0.375, value_imgw: 4.274, category: "f" },
     //   { value_um: -0.7, value_imgw: 8.643, category: "f" },
     // ];
-
-    console.log("DATA DATA ARE:", data);
 
     setState((state) => ({
       ...state,

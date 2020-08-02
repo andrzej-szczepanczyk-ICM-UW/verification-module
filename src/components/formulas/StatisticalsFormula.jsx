@@ -27,9 +27,8 @@ export function StatisticalsFormula() {
     var intercept = e.target[e.target.selectedIndex].attributes.getNamedItem(
       "intercept"
     ).value;
-    console.log("slope: ", slope, "inter", intercept);
-    debouncedDispatch(updateIntercept(Number(intercept)));
-    debouncedDispatch(updateSlope(Number(slope)));
+    dispatch(updateIntercept(Number(intercept)));
+    dispatch(updateSlope(Number(slope)));
   };
 
   return (

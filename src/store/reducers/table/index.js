@@ -13,14 +13,15 @@ const defaultState = {
   forecast_data: [],
   historical_data: [],
   historical_filters: {
-    firstDate: "2019-01-01T00:00:00.000Z",
-    lastDate: "2019-01-03T00:00:00.000Z",
-    row: 205,
-    col: 265,
+    firstDate: "2018-01-01T00:00:00.000Z",
+    lastDate: "2018-01-03T00:00:00.000Z",
+    row: 266,
+    col: 161,
+    stationName: "KOLOBRZEG",
   },
 
   forecast_filters: {
-    forecastDate: "2019-01-04T00:00:00.000Z",
+    forecastDate: "2018-01-04T00:00:00.000Z",
   },
 };
 

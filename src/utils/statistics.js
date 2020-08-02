@@ -40,17 +40,20 @@ export function computeEffectiveness(umimgw) {
 
   let yes = dane.filter((i) => i.status === "TAK").length;
   let no = dane.filter((i) => i.status === "NIE").length;
-  let false_yes = dane.filter((i) => i.status === "FAŁSZYWE TAK").length;
-  let false_no = dane.filter((i) => i.status === "FAŁSZYWE NIE").length;
+  let falseYes = dane.filter((i) => i.status === "FAŁSZYWE TAK").length;
+  let falseNo = dane.filter((i) => i.status === "FAŁSZYWE NIE").length;
 
   let effectiveness = [
-    { status: "TAK", num: yes },
-    { status: "NIE", num: no },
-    { status: "FAŁSZYWE TAK", num: false_yes },
-    { status: "FAŁSZYWE NIE", num: false_no },
+    { status: "TAK", num: yes / dane.length },
+    { status: "NIE", num: no / dane.length },
+    { status: "FAŁSZYWE TAK", num: falseYes / dane.length },
+    { status: "FAŁSZYWE NIE", num: falseNo / dane.length },
   ];
 
-  console.log(effectiveness);
+  var effectiveness2 = [yes, no, falseYes, falseNo]
+    .map((i) => i / dane.length)
+    .map((i) => Math.round(i * 1e4) / 1e4)
+    .reduce((curr, i) => String(`${curr};${i}`));
 
-  return effectiveness;
+  return effectiveness2 + String("\n");
 }

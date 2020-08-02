@@ -9,15 +9,18 @@
     "@testing-library/user-event": "^7.2.1",
     "concurrently": "^5.2.0",
     "cors": "^2.8.5",
+    "d3": "^5.16.0",
     "debounce": "^1.2.0",
     "moment": "^2.25.3",
+    "mongodb": "^3.5.9",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "taucharts": "^2.8.0"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"nodemon server/index.js\"",
@@ -42,6 +45,8 @@
   },
   "devDependencies": {
     "body-parser": "^1.19.0",
+    "eslint": "^7.5.0",
+    "eslint-plugin-react": "^7.20.4",
     "express": "^4.17.1",
     "express-pino-logger": "^5.0.0",
     "node-env-run": "^3.0.2",

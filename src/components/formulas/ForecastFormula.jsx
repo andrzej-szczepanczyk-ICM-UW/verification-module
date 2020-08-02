@@ -33,11 +33,12 @@ export function ForecastFormula() {
         //console.warn("ForecastFormula: data are: ", jres);
         debouncedDispatch(updateForecastData(jres));
 
-        document.getElementById("myForecastextarea").innerHTML = JSON.stringify(
-          forecast_data,
-          null,
-          2
-        );
+        //TODO zrobić to prez react
+        // document.getElementById("myForecastextarea").innerHTML = JSON.stringify(
+        //   forecast_data,
+        //   null,
+        //   2
+        // );
         //console.log("forecast_data is", forecast_data);
       });
   };
@@ -66,7 +67,9 @@ export function ForecastFormula() {
         defaultValue={forecastDate?.substring(0, 10)}
       />
       <button onClick={loadForecast}>Load Forecast</button>
-      <textarea id="myForecastextarea">{forecast_data}</textarea>
+      <textarea id="myForecastextarea">
+        {JSON.stringify(forecast_data, null, 2)}
+      </textarea>
     </>
   );
 }
