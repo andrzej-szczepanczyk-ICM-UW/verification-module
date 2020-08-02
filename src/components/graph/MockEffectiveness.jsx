@@ -19,16 +19,16 @@ export function MockEffectiveness() {
   var handleComputeStatisticals = () => {
     document
       .getElementById("mymockEffectivenesstextarea")
-      .innerHTML(JSON.stringify(table.historical_data, null, 2));
+      .innerHTML(JSON.stringify(UmImgwPair.historical_data, null, 2));
   };
 
-  var table = useSelector((state) => state.table);
+  var UmImgwPair = useSelector((state) => state.UmImgwPair);
 
   return (
     <>
       <div>MockEffectiveness</div>
       <textarea id="mymockEffectivenesstextarea">
-        {JSON.stringify(table.historical_data, null, 2)}
+        {JSON.stringify(UmImgwPair.historical_data, null, 2)}
       </textarea>
       <button onClick={handleComputeStatisticals}>Run!</button>
     </>

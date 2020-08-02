@@ -1,11 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-import { table } from "./reducers/table";
+import { UmImgwPair } from "./reducers/UmImgwPair";
 import { persistStore, persistReducer } from "redux-persist";
 import { config } from "./persist";
 import { createLogger } from "redux-logger";
 
 const rootReducer = combineReducers({
-  table,
+  UmImgwPair,
 });
 
 const logger = createLogger({});

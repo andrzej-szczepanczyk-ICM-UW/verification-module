@@ -6,17 +6,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateForecastData,
   updateForecastFilters,
-} from "../../store/reducers/table/actions";
+} from "../../store/reducers/UmImgwPair/actions";
 
 export function ForecastFormula() {
   const type = "oneforecast";
-  const table = useSelector((state) => state.table);
-  const forecast_data = table.forecast_data;
+  const UmImgwPair = useSelector((state) => state.UmImgwPair);
+  const forecast_data = UmImgwPair.forecast_data;
 
   const dispatch = useDispatch();
   const debouncedDispatch = debounce(dispatch, 100);
-  const { row, col } = table.historical_filters;
-  const { forecastDate } = table.forecast_filters;
+  const { row, col } = UmImgwPair.historical_filters;
+  const { forecastDate } = UmImgwPair.forecast_filters;
 
   const loadForecast = () => {
     console.log("row is", row, "col is", col);
@@ -50,9 +50,9 @@ export function ForecastFormula() {
     //   "type is",
     //   typeof e.target.value
     // );
-    const new_forecast_filters = { ...table.forecast_filters };
+    const new_forecast_filters = { ...UmImgwPair.forecast_filters };
     new_forecast_filters.forecastDate = `${e.target.value}T00:00:00.000Z`;
-    //console.log(table.forecast_filters);
+    //console.log(UmImgwPair.forecast_filters);
 
     debouncedDispatch(updateForecastFilters(new_forecast_filters));
   };

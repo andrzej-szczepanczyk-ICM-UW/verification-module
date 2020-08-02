@@ -25,7 +25,7 @@ const defaultState = {
   },
 };
 
-export function table(state = defaultState, action) {
+export function UmImgwPair(state = defaultState, action) {
   switch (action.type) {
     case UPDATE_FORECAST_DATA:
       return {

@@ -77,7 +77,7 @@ export function Effectiveness(props) {
   const [state, setState] = React.useState(defaultData);
 
   const { historical_data, forecast_data } = useSelector(
-    (state) => state.table
+    (state) => state.UmImgwPair
   );
 
   useEffect(() => {

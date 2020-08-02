@@ -11,7 +11,7 @@ import moment from "moment";
 import {
   updateHistoricalData,
   updateHistoricalFilters,
-} from "../../store/reducers/table/actions";
+} from "../../store/reducers/UmImgwPair/actions";
 
 import "./formulas.css";
 
@@ -20,7 +20,7 @@ const nodeToString = ({ row, col, stationName }) =>
 
 export function HistoricalsFormula() {
   const dispatch = useDispatch();
-  const table = useSelector((state) => state.table);
+  const UmImgwPair = useSelector((state) => state.UmImgwPair);
   const debouncedDispatch = debounce(dispatch, 100);
 
   const setFirstDate = (e) => {
@@ -31,9 +31,9 @@ export function HistoricalsFormula() {
     //   typeof e.target.value
     // );
 
-    const new_historical_filters = { ...table.historical_filters };
+    const new_historical_filters = { ...UmImgwPair.historical_filters };
     new_historical_filters.firstDate = `${e.target.value}T00:00:00.000Z`;
-    console.log(table.historical_filters);
+    console.log(UmImgwPair.historical_filters);
 
     debouncedDispatch(updateHistoricalFilters(new_historical_filters));
   };
@@ -46,9 +46,9 @@ export function HistoricalsFormula() {
     //   typeof e.target.value
     // );
 
-    const new_historical_filters = { ...table.historical_filters };
+    const new_historical_filters = { ...UmImgwPair.historical_filters };
     new_historical_filters.lastDate = `${e.target.value}T00:00:00.000Z`;
-    //console.log(table.historical_filters);
+    //console.log(UmImgwPair.historical_filters);
     debouncedDispatch(updateHistoricalFilters(new_historical_filters));
   };
 
@@ -115,12 +115,12 @@ export function HistoricalsFormula() {
   ];
 
   const fillRowCol = (e) => {
-    // console.log("my whole state is !!!!: ", table);
-    // console.log("row is ", table.historical_filters.row);
-    // console.log("col is ", table.historical_filters.col);
+    // console.log("my whole state is !!!!: ", UmImgwPair);
+    // console.log("row is ", UmImgwPair.historical_filters.row);
+    // console.log("col is ", UmImgwPair.historical_filters.col);
     // console.log("event is:", e);
 
-    let new_historical_filters = { ...table.historical_filters };
+    let new_historical_filters = { ...UmImgwPair.historical_filters };
     const [row, col] = e.target.value.split(", ");
     new_historical_filters.row = row;
     new_historical_filters.col = col;
@@ -198,12 +198,12 @@ export function HistoricalsFormula() {
   };
 
   const handleUpdateFilters = () => {
-    const { row, col, firstDate, lastDate } = table.historical_filters;
+    const { row, col, firstDate, lastDate } = UmImgwPair.historical_filters;
     let jres;
     let type = "forecast";
     let mock = true;
     if (mock) {
-      jres = mockUmimgw(table.historical_filters);
+      jres = mockUmimgw(UmImgwPair.historical_filters);
       dispatch(updateHistoricalData(jres));
     } else {
       let query = `http://localhost:3001/api/mongodata/filter?way=${type}&row=${row}&col=${col}&firstDate=${firstDate}&lastDate=${lastDate}`;
@@ -248,21 +248,21 @@ export function HistoricalsFormula() {
         })}
       </select>
       <p id="rowText">row</p>
-      <input id="rowInput" value={table.historical_filters.row}></input>
+      <input id="rowInput" value={UmImgwPair.historical_filters.row}></input>
       <p id="colText">col</p>
-      <input id="colInput" value={table.historical_filters.col}></input>
+      <input id="colInput" value={UmImgwPair.historical_filters.col}></input>
       <p id="colText">Choose Date range</p>
       <input
         onChange={setFirstDate}
         id="firstDate"
         type="date"
-        defaultValue={table.historical_filters.firstDate?.substring(0, 10)}
+        defaultValue={UmImgwPair.historical_filters.firstDate?.substring(0, 10)}
       />
       <input
         id="lastDate"
         type="date"
         onChange={setLastDate}
-        defaultValue={table.historical_filters.lastDate?.substring(0, 10)}
+        defaultValue={UmImgwPair.historical_filters.lastDate?.substring(0, 10)}
       />
       <br></br>
       <textarea id="textarea1"></textarea>

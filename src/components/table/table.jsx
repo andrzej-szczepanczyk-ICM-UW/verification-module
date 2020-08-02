@@ -4,9 +4,8 @@ import { TableEntry } from "./TableEntry";
 import "./table.css";
 
 export function Table() {
-  const table = useSelector((state) => state.table);
-  const forecast_data = table.forecast_data;
-  //const mockdata = [1, 4, 5, 66, 77, 8, 9, 10];
+  const UmImgwPair = useSelector((state) => state.UmImgwPair);
+  const forecast_data = UmImgwPair.forecast_data;
 
   return (
     <table className="table">
@@ -20,7 +19,7 @@ export function Table() {
         </tr>
       </thead>
       {forecast_data.map((row) => (
-        <TableEntry value={row} />
+        <TableEntry key={row} value={row} />
       ))}
     </table>
   );

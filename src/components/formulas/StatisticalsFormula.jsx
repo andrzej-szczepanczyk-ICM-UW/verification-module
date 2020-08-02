@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   updateSlope,
   updateIntercept,
-} from "../../store/reducers/table/actions";
+} from "../../store/reducers/UmImgwPair/actions";
 import { debounce } from "debounce";
 
 export function StatisticalsFormula() {
   const dispatch = useDispatch();
-  //const { slope, intercept } = useSelector((state) => state.table);
-  const table = useSelector((state) => state.table);
+  //const { slope, intercept } = useSelector((state) => state.UmImgwPair);
+  const UmImgwPair = useSelector((state) => state.UmImgwPair);
   const debouncedDispatch = debounce(dispatch, 100);
 
   const handleSlopeChange = (e) => {
@@ -35,26 +35,26 @@ export function StatisticalsFormula() {
     <div>
       <div>
         Sigmoid: slope
-        <b>{table.slope}</b>
+        <b>{UmImgwPair.slope}</b>
         <br />
         <input
           type="range"
           min="0"
           max="100"
-          defaultValue={table.slope * 100}
+          defaultValue={UmImgwPair.slope * 100}
           onChange={handleSlopeChange}
         />
       </div>
 
       <div>
         Sigmoid: intercept
-        <b>{table.intercept}</b>
+        <b>{UmImgwPair.intercept}</b>
         <br />
         <input
           type="range"
           min="0"
           max="100"
-          defaultValue={table.intercept * 100}
+          defaultValue={UmImgwPair.intercept * 100}
           onChange={handleInterceptChange}
         />
       </div>
