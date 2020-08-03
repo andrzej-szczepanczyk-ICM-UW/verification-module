@@ -9,12 +9,15 @@ import {
 } from "../../store/reducers/UmImgwPair/actions";
 
 export function ForecastFormula() {
+  let myState = {
+    hour: "00",
+  };
+
   const type = "oneforecast";
   const UmImgwPair = useSelector((state) => state.UmImgwPair);
   const forecast_data = UmImgwPair.forecast_data;
 
   const dispatch = useDispatch();
-  const debouncedDispatch = debounce(dispatch, 100);
   const { row, col } = UmImgwPair.historical_filters;
   const { forecastDate } = UmImgwPair.forecast_filters;
 
@@ -28,44 +31,49 @@ export function ForecastFormula() {
         return response.json();
       })
       .then((jres) => {
-        //jres.map((v) => console.log("row is:", v));
-        //console.log("Forecast Formula: IS ", jres);
-        //console.warn("ForecastFormula: data are: ", jres);
-        debouncedDispatch(updateForecastData(jres));
-
-        //TODO zrobić to prez react
-        // document.getElementById("myForecastextarea").innerHTML = JSON.stringify(
-        //   forecast_data,
-        //   null,
-        //   2
-        // );
-        //console.log("forecast_data is", forecast_data);
+        dispatch(updateForecastData(jres));
       });
   };
 
   const setForecastDate = (e) => {
-    // console.log(
-    //   "This is first date manipulation",
-    //   e.target.value,
-    //   "type is",
-    //   typeof e.target.value
-    // );
     const new_forecast_filters = { ...UmImgwPair.forecast_filters };
-    new_forecast_filters.forecastDate = `${e.target.value}T00:00:00.000Z`;
-    //console.log(UmImgwPair.forecast_filters);
+    new_forecast_filters.forecastDate = `${e.target.value}T${myState.hour}:00:00.000Z`;
+    dispatch(updateForecastFilters(new_forecast_filters));
+  };
 
-    debouncedDispatch(updateForecastFilters(new_forecast_filters));
+  const changeHour = (h) => {
+    myState.hour = h;
+    let { forecastDate } = UmImgwPair.forecast_filters;
+    forecastDate = `${forecastDate.substring(0, 11)}${
+      myState.hour
+    }${forecastDate.substring(13)}`;
+    dispatch(updateForecastFilters({ forecastDate }));
   };
 
   return (
     <>
       <div id="formulas"></div>
-      Choose Date of forecast:
+      FORECAST: Choose Date
       <input
         type="date"
         onChange={setForecastDate}
         defaultValue={forecastDate?.substring(0, 10)}
       />
+      FORECAST: Choose Hour
+      {["00", "06", "12", "18"].map((h) => {
+        return (
+          <div>
+            <input
+              type="radio"
+              id={h}
+              name="chooseHour"
+              value={h}
+              onClick={() => changeHour(h)}
+            />
+            <label>{h}</label>
+          </div>
+        );
+      })}
       <button onClick={loadForecast}>Load Forecast</button>
       <textarea id="myForecastextarea">
         {JSON.stringify(forecast_data, null, 2)}
